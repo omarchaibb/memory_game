@@ -2,6 +2,22 @@ let cardsContainer = document.querySelector(".cards");
 let score = document.querySelector(".score-and-trays .score p span")
 let trys = document.querySelector(".trys p span")
 
+function shuffle(array){
+    let shuffled_array =[]
+    let usedNumbers = []
+    let i = 0
+    while (i<array.length){
+        let index = Math.floor(Math.random() * array.length)
+        // === if the indox not in the usedNumbers we will use it and push it to usedNumbers ===
+        if(!usedNumbers.includes(index)){
+            usedNumbers.push(index)
+            shuffled_array.push(array[index])
+            i++
+        }
+    }
+    return shuffled_array
+}
+
 function createElements() {
     let images_path_array = ["images/cherries.png","images/chili.png","images/lemon.png","images/orange.png","images/pineapple.png","images/strawberry.png","images/cherries.png","images/chili.png","images/lemon.png","images/orange.png","images/pineapple.png","images/strawberry.png"];
         images_path_array = shuffle(images_path_array);
@@ -82,7 +98,7 @@ function handleCardClicks(){
                         },1300)
                     }
                 })
-                // ==== call checkWinOrLose fucntio befor start changing score and trys because we need trys and score to take they default value ====
+                // ==== call checkWinOrLose fucntio  ====
                 checkwin(trys,score,allcard)
                 // ==== check the first element and second element of selected_array ar they the same and they id deff ====
                 if(selected_array[0].innerHTML == selected_array[1].innerHTML && selected_array[0].id !== selected_array[1].id){
@@ -132,8 +148,6 @@ function handleCardClicks(){
 });
 }
 
-
-
 function checkwin(trys, score, allcard) {
     let star_and_shuffle = document.querySelector(".start-and-shuffle");
     //==== check the inner html of trys and score ====
@@ -179,20 +193,7 @@ function checkwin(trys, score, allcard) {
 }
 
 
-function shuffle(array){
-    let shuffled_array =[]
-    let usedNumbers = []
-    let i = 0
-    while (i<array.length){
-        let index = Math.floor(Math.random() * array.length)
-        if(!usedNumbers.includes(index)){
-            usedNumbers.push(index)
-            shuffled_array.push(array[index])
-            i++
-        }
-    }
-    return shuffled_array
-}
+
 createElements();
 
 
