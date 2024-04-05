@@ -58,7 +58,6 @@ function createElements() {
 }
 
 
-
 function handleCardClicks(){
     let allback  = document.querySelectorAll(".back")
     let allcard = document.querySelectorAll(".card")
@@ -81,10 +80,10 @@ function handleCardClicks(){
             
             if(selected_array.length == 2){
                 // ==== if two element selected have the same id we will remove one of them because we dont want the same element at the selected array ====
-                if(selected_array[0].id == selected_array[1].id){
-                    selected_array.splice(1, 1);
-        
-                }
+                    if(selected_array[0].id == selected_array[1].id){
+                        selected_array.splice(1, 1);
+            
+                    }
                 // ==== the card that not selected and not in the selected array we will add to them class of not clickable and we will removet after 1.2 second and that to avoid click on to meny card at the same time so after the transitions we are able to click =====
                 allcard.forEach(card =>{
                     if(!selected_array.includes(card)){
@@ -99,7 +98,6 @@ function handleCardClicks(){
                     }
                 })
                 // ==== call checkWinOrLose fucntio  ====
-                checkwin(trys,score,allcard)
                 // ==== check the first element and second element of selected_array ar they the same and they id deff ====
                 if(selected_array[0].innerHTML == selected_array[1].innerHTML && selected_array[0].id !== selected_array[1].id){
                     // === add the score ===
@@ -110,12 +108,16 @@ function handleCardClicks(){
                     selected_array[0].classList.add("not-clickable")
                     selected_array[1].classList.add("not-clickable")
                     selected_array = []
-                }else{
+                    checkwin(trys,score,allcard)
                     
+                }else{
+                    let audio = new Audio("audio/faile.mp3")
+                    audio.play();
                     setTimeout(() => {
                         // ==== check if the two card not the same ====
                         if(selected_array[0].innerHTML !== selected_array[1].innerHTML){
                             //==== decrease  the trys =====
+
                             trys.innerHTML = parseInt(trys.innerHTML)-1
 
                             //==== remove the transition of the two card on the selected_array ====
@@ -124,10 +126,11 @@ function handleCardClicks(){
                             selected_array[1].classList.remove("transition","selected")
                             selected_array[1].classList.add("front-transition")
                             selected_array =[]
+                            checkwin(trys,score,allcard)
                         }
                     }, 1300);
+                    
                 }
-                
 
 
             }
@@ -153,9 +156,12 @@ function handleCardClicks(){
 function checkwin(trys, score, allcard) {
     let star_and_shuffle = document.querySelector(".start-and-shuffle");
     //==== check the inner html of trys and score ====
-    if (parseInt(trys.innerHTML) == 1 && parseInt(score.innerHTML) !== 6) {
+    if (parseInt(trys.innerHTML) == 0 && parseInt(score.innerHTML) !== 6) {
         let audio = new Audio("audio/fail.mp3")
         audio.play();
+        allcard.forEach(card => {
+            card.classList.remove("transition");
+        });
         //==== create a button of lose ====
         cardsContainer.classList.add("not-clickable");
         let lose = document.createElement("div");
@@ -174,7 +180,7 @@ function checkwin(trys, score, allcard) {
         });
     }
 
-    if (parseInt(trys.innerHTML) !== 0 && parseInt(score.innerHTML) == 5) {
+    if (parseInt(trys.innerHTML) !== 0 && parseInt(score.innerHTML) == 6) {
         let audio = new Audio("audio/win.mp3")
         audio.play();
         console.log("you win");
@@ -190,9 +196,6 @@ function checkwin(trys, score, allcard) {
             star_and_shuffle.appendChild(win);
         }, 500);
 
-        allcard.forEach(card => {
-            card.classList.remove("transition");
-        });
         
         
     }
