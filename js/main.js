@@ -63,9 +63,9 @@ function handleCardClicks(){
     let allback  = document.querySelectorAll(".back")
     let allcard = document.querySelectorAll(".card")
     let selected_array = []
-    checkwin(trys,score,allcard)
     allcard.forEach(card => {
         card.addEventListener("click",function(){
+
             // ===== add transition after the click on the card =====
                 card.classList.add("transition")
             // ===== add selected after the click on the card =====
@@ -103,6 +103,8 @@ function handleCardClicks(){
                 // ==== check the first element and second element of selected_array ar they the same and they id deff ====
                 if(selected_array[0].innerHTML == selected_array[1].innerHTML && selected_array[0].id !== selected_array[1].id){
                     // === add the score ===
+                    let audio = new Audio("audio/click2.mp3")
+                    audio.play();
                     score.innerHTML = parseInt(score.innerHTML) + 1
                     // ==== add not clickable because we don't want to clickc to them again and the score will increase ===
                     selected_array[0].classList.add("not-clickable")
@@ -112,7 +114,7 @@ function handleCardClicks(){
                     
                     setTimeout(() => {
                         // ==== check if the two card not the same ====
-                        if(selected_array[0] !== selected_array[1]){
+                        if(selected_array[0].innerHTML !== selected_array[1].innerHTML){
                             //==== decrease  the trys =====
                             trys.innerHTML = parseInt(trys.innerHTML)-1
 
@@ -152,6 +154,8 @@ function checkwin(trys, score, allcard) {
     let star_and_shuffle = document.querySelector(".start-and-shuffle");
     //==== check the inner html of trys and score ====
     if (parseInt(trys.innerHTML) == 1 && parseInt(score.innerHTML) !== 6) {
+        let audio = new Audio("audio/fail.mp3")
+        audio.play();
         //==== create a button of lose ====
         cardsContainer.classList.add("not-clickable");
         let lose = document.createElement("div");
@@ -171,6 +175,8 @@ function checkwin(trys, score, allcard) {
     }
 
     if (parseInt(trys.innerHTML) !== 0 && parseInt(score.innerHTML) == 5) {
+        let audio = new Audio("audio/win.mp3")
+        audio.play();
         console.log("you win");
         cardsContainer.classList.add("not-clickable");
         let win = document.createElement("div");
@@ -195,8 +201,3 @@ function checkwin(trys, score, allcard) {
 
 
 createElements();
-
-
-
-
-
