@@ -21,6 +21,8 @@ body{
     width: 889px;
     height: 100%;
 }
+
+
 .cards{
     margin: 10px auto;
     height: 700px;
@@ -54,6 +56,10 @@ body{
     transition: transform .3s;
     transform: rotateY(180deg);
 }
+
+
+
+
 
 
 .front-transition{
@@ -198,4 +204,23 @@ button:not(.lose button) {
     color: black;
     font-size: 36px;
     font-weight: 700;
+}
+
+
+@media (max-width:905px) {
+    .container{
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+    .cards{
+        width: 73%;
+        height: 537px;
+    }
+    .start-and-shuffle .start{
+        top: 38%;
+        left: 50%;
+    }
+    .buttons{
+        flex-direction: row;
+    }
 }
